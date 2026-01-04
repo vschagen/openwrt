@@ -41,7 +41,7 @@
 			};
 
 			partition@50000 {
-				compatible = "tplink,firmware";
+				compatible = "denx,uimage";
 				label = "firmware";
 				reg = <0x50000 0x770000>;
 			};
