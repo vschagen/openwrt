@@ -1,0 +1,43 @@
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -55,6 +55,8 @@ struct tc_action;
+ #define DSA_TAG_PROTO_LAN937X_VALUE		27
+ #define DSA_TAG_PROTO_VSC73XX_8021Q_VALUE	28
+ #define DSA_TAG_PROTO_BRCM_LEGACY_FCS_VALUE	29
++#define DSA_TAG_PROTO_RALINK_VALUE              30
++
+ 
+ enum dsa_tag_protocol {
+ 	DSA_TAG_PROTO_NONE		= DSA_TAG_PROTO_NONE_VALUE,
+@@ -87,6 +89,7 @@ enum dsa_tag_protocol {
+ 	DSA_TAG_PROTO_RZN1_A5PSW	= DSA_TAG_PROTO_RZN1_A5PSW_VALUE,
+ 	DSA_TAG_PROTO_LAN937X		= DSA_TAG_PROTO_LAN937X_VALUE,
+ 	DSA_TAG_PROTO_VSC73XX_8021Q	= DSA_TAG_PROTO_VSC73XX_8021Q_VALUE,
++	DSA_TAG_PROTO_RALINK		= DSA_TAG_PROTO_RALINK_VALUE,
+ };
+ 
+ struct dsa_switch;
+--- a/net/dsa/Kconfig
++++ b/net/dsa/Kconfig
+@@ -190,4 +190,11 @@ config NET_DSA_TAG_XRS700X
+ 	  Say Y or M if you want to enable support for tagging frames for
+ 	  Arrow SpeedChips XRS700x switches that use a single byte tag trailer.
+ 
++
++config NET_DSA_TAG_RALINK
++        tristate "Tag driver for RALINK switches"
++        help
++          Say Y or M if you want to enable support for tagging frames for
++          RALINK ESW / GSW  switches that use TPID 0x81xx tagging.
++
+ endif
+--- a/net/dsa/Makefile
++++ b/net/dsa/Makefile
+@@ -39,6 +39,7 @@ obj-$(CONFIG_NET_DSA_TAG_SJA1105) += tag
+ obj-$(CONFIG_NET_DSA_TAG_TRAILER) += tag_trailer.o
+ obj-$(CONFIG_NET_DSA_TAG_VSC73XX_8021Q) += tag_vsc73xx_8021q.o
+ obj-$(CONFIG_NET_DSA_TAG_XRS700X) += tag_xrs700x.o
++obj-$(CONFIG_NET_DSA_TAG_RALINK) += tag_ralink.o
+ 
+ # for tracing framework to find trace.h
+ CFLAGS_trace.o := -I$(src)
